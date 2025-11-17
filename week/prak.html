@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login</title>
+  <style>
+    /* konten utama */
+    #main { padding: 2rem; max-width: 480px; margin: 40px auto; }
+
+    /* overlay akses ditolak */
+    #blockedOverlay {
+      position: fixed;
+      inset: 0; /* top:0; right:0; bottom:0; left:0; */
+      display: none; /* awalnya tersembunyi */
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.88);
+      z-index: 9999;
+      color: #fff;
+      text-align: center;
+      padding: 2rem;
+    }
+    #blockedOverlay .message {
+      font-size: clamp(2rem, 6vw, 5rem); /* responsif */
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+    #blockedOverlay .sub {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* opsional: sembunyikan fokus / scroll */
+    body.no-scroll { overflow: hidden; }
+  </style>
+</head>
+<body>
+  <div id="main">
+    <h2>Form Login</h2>
+    <label>Nama: <input id="name" type="text" /></label><br /><br />
+    <label>Umur: <input id="umur" type="number" min="0" /></label><br /><br />
+    <button id="btnLogin">Masuk</button>
+  </div>
+
+  <!-- overlay -->
+  <div id="blockedOverlay" role="alert" aria-live="assertive">
+    <div>
+      <div class="message">AKSES DITOLAK</div>
+      <div class="sub">Maaf, Anda belum cukup umur untuk mengakses halaman ini.</div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('btnLogin').addEventListener('click', validateAge);
+
+    function validateAge() {
+      const name = document.getElementById('name').value.trim();
+      const umurStr = document.getElementById('umur').value.trim();
+      const umur = parseInt(umurStr, 10);
+
+      if (!umurStr || isNaN(umur)) {
+        alert('Masukkan umur yang valid.');
+        return;
+      }
+
+      if (umur < 17) {
+        // sembunyikan konten utama
+        document.getElementById('main').style.display = 'none';
+
+        // tampilkan overlay besar
+        const overlay = document.getElementById('blockedOverlay');
+        overlay.style.display = 'flex';
+
+        // matikan scroll
+        document.body.classList.add('no-scroll');
+
+        // (opsional) fokus ke overlay untuk aksesibilitas
+        overlay.setAttribute('tabindex','-1');
+        overlay.focus();
+      } else {
+        alert('Selamat datang, ' + (name || 'user') + '!');
+        // lanjutkan proses login Anda di sini...
+      }
+    }
+  </script>
+</body>
+</html>

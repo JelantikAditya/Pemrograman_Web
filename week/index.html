@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="judul">
+        <h1>Data Mahasiswa</h1>
+    </div>
+
+    <div class="container">
+        <div class="input">
+            <form>
+        <label for="nim">NIM:</label>
+        <input type="text" id="nim"><br><br>
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama"><br><br>
+        <label for="tgl">Tanggal Lahir:</label>
+        <input type="date" id="tgl"><br><br>
+        <label>Jenis Kelamin:</label>
+        <input type="radio" name="jk">Laki-laki
+        <input type="radio" name="jk">Perempuan<br><br>
+        <label for="alamat">Alamat di Bandung:</label>
+        <textarea id="alamat" name="alamat" rows="3" cols="30"></textarea><br><br><br>
+       <label> Tinggal di:</label>
+        <select>
+            <option>cimahi</option>
+            <option>cibodas</option>
+            <option>citeko</option> 
+        </select><br><br>
+
+        <label>Pilih 2 hobi yang paling disukai:</label>
+        <input type="checkbox" name="hobi">Berenang 
+        <input type="checkbox" name="hobi">Membaca
+        <input type="checkbox" name="hobi">Bersepeda<br><br>
+
+        <div class="buutton">
+            <input type="submit" value="Submit" onclick="location.href='profil.html'">
+            <input type="reset" value="reset">
+        </div>
+        
+    </form><br><br>
+        </div>
+    </div>
+    <div class="gambar">
+        <img src="image.png" alt="gambar">
+    </div>
+</body>
+</html>
