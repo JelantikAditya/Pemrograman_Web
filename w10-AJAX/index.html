@@ -3,39 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>CD Catalog AJAX</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+
+<body class="bg-dark text-white">
     <div class="container text-center mt-5">
-        <button type="submit" class="btn btn-primary p-4 m-3 "  onclick="loadDoc()">Klik gw Bang!</button>
-        <div  class="text-center bg-secondary text-white rounded m-6 ">
-            <p id="demo"></p>
+        <button type="submit" class="btn btn-primary p-4 m-3" onclick="loadDoc()">Klik gw Bang!</button>
+
+        <div class="bg-secondary text-white rounded p-4">
+            <div id="demo"></div>
         </div>
     </div>
-    
-
     <script>
         function loadDoc(){
             const xhttp = new XMLHttpRequest();
             xhttp.onload = function() {
-                myFunction(this);
+                loadTable(this);
             };
             xhttp.open("GET", "cd_catalog.xml");
             xhttp.send();
         }
-
-        function myFunction(xml) {
+        function loadTable(xml) {
             const xmlDoc = xml.responseXML;
-            const x = xmlDoc.getElementsByTagName("cd");
-            let data = "";
-            for (let i = 0; i < x.length; i++) {
-                data += x[i].getElementsByTagName("title")[0].childNodes[0].nodeValue + "<br>";
+            const cds = xmlDoc.getElementsByTagName("cd");
+
+            let table = `
+            <table class="table table-striped table-bordered table-dark mt-3">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th>Type</th>
+                        <th>Release</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+
+            for (let i = 0; i < cds.length; i++) {
+                let title = cds[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+                let artist = cds[i].getElementsByTagName("artist")[0].childNodes[0].nodeValue;
+                let type = cds[i].getElementsByTagName("type")[0].childNodes[0].nodeValue;
+                let release = cds[i].getElementsByTagName("release")[0].childNodes[0].nodeValue;
+
+                table += `
+                    <tr>
+                        <td>${title}</td>
+                        <td>${artist}</td>
+                        <td>${type}</td>
+                        <td>${release}</td>
+                    </tr>
+                `;
             }
-            document.getElementById("demo").innerHTML = data;
+
+            table += `
+                </tbody>
+            </table>
+            `;
+
+            document.getElementById("demo").innerHTML = table;
         }
-
-
     </script>
 </body>
 </html>
